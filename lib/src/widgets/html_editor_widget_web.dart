@@ -698,13 +698,16 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
       if (data['type'] != null &&
           data['type'].contains('toDart:') &&
           data['view'] == createdViewId) {
-        if (data['type'].contains('onBeforeCommand')) {
+        if (data['type'].contains('onBeforeCommand') &&
+            data['contents'] != null) {
           c.onBeforeCommand!.call(data['contents']);
         }
-        if (data['type'].contains('onChangeContent')) {
+        if (data['type'].contains('onChangeContent') &&
+            data['contents'] != null) {
           c.onChangeContent!.call(data['contents']);
         }
-        if (data['type'].contains('onChangeCodeview')) {
+        if (data['type'].contains('onChangeCodeview') &&
+            data['contents'] != null) {
           c.onChangeCodeview!.call(data['contents']);
         }
         if (data['type'].contains('onDialogShown')) {
@@ -722,10 +725,10 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
         if (data['type'].contains('onBlurCodeview')) {
           c.onBlurCodeview!.call();
         }
-        if (data['type'].contains('onImageLinkInsert')) {
+        if (data['type'].contains('onImageLinkInsert') && data['url'] != null) {
           c.onImageLinkInsert!.call(data['url']);
         }
-        if (data['type'].contains('onImageUpload')) {
+        if (data['type'].contains('onImageUpload') && data['base64'] != null) {
           var map = <String, dynamic>{
             'lastModified': data['lastModified'],
             'lastModifiedDate': data['lastModifiedDate'],
@@ -738,7 +741,8 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
           var file = fileUploadFromJson(jsonStr);
           c.onImageUpload!.call(file);
         }
-        if (data['type'].contains('onImageUploadError')) {
+        if (data['type'].contains('onImageUploadError') &&
+            data['error'] != null) {
           if (data['base64'] != null) {
             c.onImageUploadError!.call(
                 null,
@@ -768,10 +772,10 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
                         : UploadError.exceededMaxSize);
           }
         }
-        if (data['type'].contains('onKeyDown')) {
+        if (data['type'].contains('onKeyDown') && data['keyCode'] != null) {
           c.onKeyDown!.call(data['keyCode']);
         }
-        if (data['type'].contains('onKeyUp')) {
+        if (data['type'].contains('onKeyUp') && data['keyCode'] != null) {
           c.onKeyUp!.call(data['keyCode']);
         }
         if (data['type'].contains('onMouseDown')) {
@@ -786,7 +790,8 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
         if (data['type'].contains('onScroll')) {
           c.onScroll!.call();
         }
-        if (data['type'].contains('characterCount')) {
+        if (data['type'].contains('characterCount') &&
+            data['totalChars'] != null) {
           widget.controller.characterCount = data['totalChars'];
         }
       }
